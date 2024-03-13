@@ -15,8 +15,8 @@
 </form>
 <script>
     const form =document.querySelector('form');
-    const emailError = document.querySelector('email.error')
-    const passwordError = document.querySelector('password.error')
+    const emailError = document.querySelector('.email.error')
+    const passwordError = document.querySelector('.password.error')
 
     form.addEventListener('submit', async (e)=>{
 
@@ -29,17 +29,17 @@ try{
     const res= await fetch('/signup',{
      method:'POST',
      body: JSON.stringify({email:email ,password:password}),
-     headers:{'content-Type':'application/json'}
+     headers:{'Content-Type':'application/json'}
     });
    
 
     const data = await res.json();
     console.log("data ya man =",data.errors);
-    // if (data.errors){
-    //     emailError.textContent = data.errors.email;
-    //     passwordError.textContent =data.errors.password;
+    if (data.errors){
+        emailError.textContent = data.errors.email;
+        passwordError.textContent =data.errors.password;
 
-    // }    
+    }    
     if (data.user){
         location.assign('/')
     }
