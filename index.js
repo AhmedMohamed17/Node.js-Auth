@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
-const { requireAuth } = require("./middleware/authMiddleware");
+const { requireAuth, checkUser } = require("./middleware/authMiddleware.js");
 const app = express();
 const port = 3000;
 // middleware
@@ -22,7 +22,8 @@ mongoose
   .catch((err) => console.log("error ya ahmed =", err));
 
 // routes
-app.get("/", requireAuth, (req, res) => res.render("home"));
+app.get("*", checkUser);
+app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", requireAuth, (req, res) => res.render("smoothies"));
 app.use(authRoutes);
 
